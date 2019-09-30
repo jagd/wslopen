@@ -1,20 +1,22 @@
+#define UNICODE
+
 #include <windows.h>
 #include <string>
 
-int WINAPI WinMain(
+int WINAPI wWinMain(
 	HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
-	LPSTR     lpCmdLine,
+	LPWSTR     lpCmdLine,
 	int       nShowCmd
 )
 {
-	const std::string cmd = (lpCmdLine);
+	const std::wstring cmd = lpCmdLine;
 	if (!cmd.empty()) {
-		const std::string str = "cmd.exe /c start " + cmd;
+		const std::wstring str = TEXT("cmd.exe /c start ") + cmd;
 		STARTUPINFO info = { sizeof(info) };
 		PROCESS_INFORMATION processInfo;
-		CreateProcess(
-			NULL, const_cast<LPSTR>(str.c_str()),
+		CreateProcessW(
+			NULL, const_cast<LPWSTR>(str.c_str()),
 			NULL, NULL, false, 0, NULL, NULL, &info, &processInfo
 		);
 	}
