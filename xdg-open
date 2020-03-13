@@ -1,0 +1,2 @@
+#!/bin/sh
+exec open "`wslpath -w \"$1\"`"
