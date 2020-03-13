@@ -31,7 +31,7 @@ DWORD open(std::wstring filename)
     if (!filename.empty()) {
 		SHELLEXECUTEINFO ShExecInfo = { 0 };
 		ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-		ShExecInfo.fMask = SEE_MASK_DOENVSUBST | SEE_MASK_NOCLOSEPROCESS;
+		ShExecInfo.fMask = SEE_MASK_DOENVSUBST | SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC | SEE_MASK_WAITFORINPUTIDLE;
 		ShExecInfo.hwnd = NULL;
         ShExecInfo.lpVerb = L"open";
         ShExecInfo.lpFile = static_cast<LPCWSTR>(filename.c_str());
@@ -39,11 +39,12 @@ DWORD open(std::wstring filename)
 		ShExecInfo.lpDirectory = NULL;
 		ShExecInfo.nShow = SW_SHOW;
 		ShExecInfo.hInstApp = (HINSTANCE) SE_ERR_DDEFAIL;
-        if (ShellExecuteEx(&ShExecInfo)) {
+        ShellExecuteEx(&ShExecInfo);
+        if (ShExecInfo.hProcess) {
 			::WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
             ::GetExitCodeProcess(ShExecInfo.hProcess, &exitCode);
+		    ::CloseHandle(ShExecInfo.hProcess);
         }
-		::CloseHandle(ShExecInfo.hProcess);
     }
     return exitCode;
 }
