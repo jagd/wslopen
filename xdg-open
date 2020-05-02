@@ -1,2 +1,11 @@
 #!/bin/sh
-exec open "`wslpath -w \"$1\"`"
+
+[ -z "$1" ] && exit 1
+
+if [ -e "$1" ] ; then
+    file=`wslpath -w "$1"`
+else
+    file=$1
+fi
+
+exec open "$file"
