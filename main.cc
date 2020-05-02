@@ -29,21 +29,21 @@ DWORD open(std::wstring filename)
         }
     }
     if (!filename.empty()) {
-		SHELLEXECUTEINFO ShExecInfo = { 0 };
-		ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-		ShExecInfo.fMask = SEE_MASK_DOENVSUBST | SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC | SEE_MASK_WAITFORINPUTIDLE;
-		ShExecInfo.hwnd = NULL;
+        SHELLEXECUTEINFO ShExecInfo = { 0 };
+        ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+        ShExecInfo.fMask = SEE_MASK_DOENVSUBST | SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC | SEE_MASK_WAITFORINPUTIDLE;
+        ShExecInfo.hwnd = NULL;
         ShExecInfo.lpVerb = L"open";
         ShExecInfo.lpFile = static_cast<LPCWSTR>(filename.c_str());
         ShExecInfo.lpParameters = L"";
-		ShExecInfo.lpDirectory = NULL;
-		ShExecInfo.nShow = SW_SHOW;
-		ShExecInfo.hInstApp = (HINSTANCE) SE_ERR_DDEFAIL;
+        ShExecInfo.lpDirectory = NULL;
+        ShExecInfo.nShow = SW_SHOW;
+        ShExecInfo.hInstApp = (HINSTANCE) SE_ERR_DDEFAIL;
         ShellExecuteEx(&ShExecInfo);
         if (ShExecInfo.hProcess) {
-			::WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+            ::WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
             ::GetExitCodeProcess(ShExecInfo.hProcess, &exitCode);
-		    ::CloseHandle(ShExecInfo.hProcess);
+            ::CloseHandle(ShExecInfo.hProcess);
         }
     }
     return exitCode;
@@ -66,7 +66,7 @@ int WINAPI wWinMain(
         )
 {
     init();
-	DWORD exitCode = open(lpCmdLine);
+    DWORD exitCode = open(lpCmdLine);
     return exitCode;
 }
 
@@ -77,6 +77,6 @@ int wmain(int argc, wchar_t *argv[], wchar_t *envp[])
         return 1;
     }
     init();
-	DWORD exitCode = open(argv[1]);
+    DWORD exitCode = open(argv[1]);
     return exitCode;
 }
