@@ -1,16 +1,17 @@
 # Replacement for `xdg-open` and mailcap `open` for better interoperability with Windows
 
-## Installation
+## What's new
 
-In WSL:
+- Version 2:
+  - The `exe` file is minimized (2048 Bytes)
+  - Avoid CRT DLLs
 
-```bash
-mkdir -p ~/.local/bin
-curl -L https://github.com/jagd/wslopen/releases/download/v1/open-x64-vs2019.exe -o ~/.local/bin/wslopen.exe
-curl -L https://raw.githubusercontent.com/jagd/wslopen/master/xdg-open -o ~/.local/bin/xdg-open
-chmod +x ~/.local/bin/{xdg-open,wslopen.exe}
-cp ~/.local/bin/{xdg-,}open
-```
+## Installation on WSL
+
+- Copy the content of the
+  [zip file](https://github.com/jagd/wslopen/releases/download/v2/wslopen.zip)
+  into any folder of PATH (e.g. `~/.local/bin`)
+- `chmod +x` on these files
 
 ## Why you will need this
 
