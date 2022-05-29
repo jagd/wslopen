@@ -33,12 +33,12 @@ void mainCRTStartup() {
     if (*p == '\'' || *p == '"') {
       TCHAR quote = *p;
       while (*p && *p != quote)
-         ++p;
+        ++p;
     }
     ++p;
     if (*p == ' ') {
-        ++p;
-        break;
+      ++p;
+      break;
     }
   }
   ExitProcess((*p == '\0') ? 1 : open(p));
