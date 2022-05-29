@@ -8,4 +8,4 @@ else
     file=$1
 fi
 
-exec open "$file"
+exec wslopen.exe "$file"
