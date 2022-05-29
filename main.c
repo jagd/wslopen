@@ -1,4 +1,6 @@
-#include <Windows.h>
+#define UNICODE
+
+#include <windows.h>
 
 DWORD open(LPCTSTR filename) {
   DWORD exitCode = EXIT_FAILURE;
@@ -25,12 +27,19 @@ DWORD open(LPCTSTR filename) {
   return exitCode;
 }
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                    LPWSTR lpCmdLine, int nShowCmd) {
-  DWORD exitCode = open(lpCmdLine);
-  return exitCode;
-}
-
-int wmain(int argc, wchar_t *argv[], wchar_t *envp[]) {
-  return (argc <= 1) ? 1 : open(argv[1]);
+void mainCRTStartup() {
+  TCHAR *p = GetCommandLine();
+  while (*p) {
+    if (*p == '\'' || *p == '"') {
+      TCHAR quote = *p;
+      while (*p && *p != quote)
+         ++p;
+    }
+    ++p;
+    if (*p == ' ') {
+        ++p;
+        break;
+    }
+  }
+  ExitProcess((*p == '\0') ? 1 : open(p));
 }
