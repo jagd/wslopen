@@ -32,12 +32,14 @@ void mainCRTStartup() {
   while (*p) {
     if (*p == '\'' || *p == '"') {
       TCHAR quote = *p;
+      ++p;
       while (*p && *p != quote)
         ++p;
     }
     ++p;
     if (*p == ' ') {
-      ++p;
+      while (*p == ' ')
+        ++p;
       break;
     }
   }
